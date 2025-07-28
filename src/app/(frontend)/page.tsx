@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import './styles.css'
+import { Media } from '@/collections/Media'
 
 export default async function HomePage() {
   const headers = await getHeaders()
