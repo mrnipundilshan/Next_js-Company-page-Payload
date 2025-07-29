@@ -8,6 +8,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     const { id } = params
 
     // Delete the post
+    //
     await payload.delete({
       collection: 'Posts',
       id: id,
