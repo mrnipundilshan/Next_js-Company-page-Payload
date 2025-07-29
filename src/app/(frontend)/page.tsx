@@ -7,6 +7,7 @@ import React from 'react'
 import config from '@/payload.config'
 import './styles.css'
 import CreatePostForm from './CreatePostForm'
+import DeletePostButton from './DeletePostButton'
 
 // Helper function to render rich text content
 
@@ -81,7 +82,10 @@ export default async function HomePage() {
                   </div>
                 )}
                 <div className="post-content">
-                  <h3>{post['Project Name']}</h3>
+                  <div className="post-header">
+                    <h3>{post['Project Name']}</h3>
+                    <DeletePostButton postId={post.id} />
+                  </div>
                   <p>{renderRichText(post['Project Description'])}</p>
                 </div>
               </div>
