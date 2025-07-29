@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import './CreatePostForm.css'
+import './css/CreatePostForm.css'
 
 type CreatePostFormProps = object
 

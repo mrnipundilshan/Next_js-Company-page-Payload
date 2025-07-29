@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import './DeletePostButton.css'
+import './css/DeletePostButton.css'
 
 interface DeletePostButtonProps {
   postId: string
