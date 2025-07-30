@@ -8,6 +8,7 @@ import config from '@/payload.config'
 import './css/styles.css'
 import CreatePostForm from './CreatePostForm'
 import DeletePostButton from './DeletePostButton'
+import CreateFeedbackForm from './CreateFeedback'
 
 // Helper function to render rich text content
 
@@ -35,7 +36,11 @@ export default async function HomePage() {
   // Fetch posts
   const posts = await payload.find({
     collection: 'Posts',
-    limit: 10,
+  })
+
+  // Fetch posts
+  const feedback = await payload.find({
+    collection: 'Feedback',
   })
 
   return (
@@ -84,9 +89,44 @@ export default async function HomePage() {
                 <div className="post-content">
                   <div className="post-header">
                     <h3>{post['Project Name']}</h3>
-                    <DeletePostButton postId={post.id} />
+                    <DeletePostButton postId={post.id} collectionType={'posts'} />
                   </div>
                   <p>{renderRichText(post['Project Description'])}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Create Post Form */}
+        <div className="create-post-section">
+          <h2>Add New Feedback</h2>
+          <CreateFeedbackForm />
+        </div>
+
+        {/* Posts Section */}
+        <div className="posts-section">
+          <h2>Our Feedbacks</h2>
+          <div className="posts-grid">
+            {feedback.docs.map((post: any) => (
+              <div key={post.id} className="post-card">
+                {post.backgroundImage && (
+                  <div className="post-image">
+                    <Image
+                      src={post.backgroundImage.url}
+                      alt={post.backgroundImage.alt || post['Client Name']}
+                      width={100}
+                      height={100}
+                      style={{ objectFit: 'scale-down' }}
+                    />
+                  </div>
+                )}
+                <div className="post-content">
+                  <div className="post-header">
+                    <h3>{post['Client Name']}</h3>
+                    <DeletePostButton postId={post.id} collectionType={'feedback'} />
+                  </div>
+                  <p>{post['Client Feedback']}</p>
                 </div>
               </div>
             ))}

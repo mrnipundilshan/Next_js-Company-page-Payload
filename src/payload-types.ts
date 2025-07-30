@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     Posts: Post;
+    Feedback: Feedback;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -79,6 +80,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     Posts: PostsSelect<false> | PostsSelect<true>;
+    Feedback: FeedbackSelect<false> | FeedbackSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -186,6 +188,18 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Feedback".
+ */
+export interface Feedback {
+  id: number;
+  'Client Name'?: string | null;
+  'Client Feedback'?: string | null;
+  backgroundImage: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -202,6 +216,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'Posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'Feedback';
+        value: number | Feedback;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -292,6 +310,17 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   'Project Name'?: T;
   'Project Description'?: T;
+  backgroundImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Feedback_select".
+ */
+export interface FeedbackSelect<T extends boolean = true> {
+  'Client Name'?: T;
+  'Client Feedback'?: T;
   backgroundImage?: T;
   updatedAt?: T;
   createdAt?: T;

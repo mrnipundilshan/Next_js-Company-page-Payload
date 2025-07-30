@@ -30,8 +30,8 @@
 
 .confirmation-dialog {
   position: absolute;
-  top: 0;
-  right: 0;
+  bottom: 80px;
+  right: 100px;
   background: rgba(0, 0, 0, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;

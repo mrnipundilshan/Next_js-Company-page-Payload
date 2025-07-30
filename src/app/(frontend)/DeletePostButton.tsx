@@ -5,9 +5,10 @@ import './css/DeletePostButton.css'
 
 interface DeletePostButtonProps {
   postId: string
+  collectionType: 'feedback' | 'posts'
 }
 
-const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId }) => {
+const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId, collectionType }) => {
   const [isDeleting, setIsDeleting] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
 
@@ -19,19 +20,21 @@ const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId }) => {
 
     setIsDeleting(true)
     try {
-      const response = await fetch(`/api/posts/${postId}`, {
+      const response = await fetch(`/api/${collectionType}/${postId}`, {
         method: 'DELETE',
       })
 
       if (!response.ok) {
-        throw new Error('Failed to delete post')
+        throw new Error(`Failed to delete ${collectionType === 'feedback' ? 'feedback' : 'post'}`)
       }
 
       // Refresh the page to show updated posts
       window.location.reload()
     } catch (error) {
-      console.error('Error deleting post:', error)
-      alert('Error deleting project. Please try again.')
+      console.error(`Error deleting ${collectionType}:`, error)
+      alert(
+        `Error deleting ${collectionType === 'feedback' ? 'feedback' : 'project'}. Please try again.`,
+      )
     } finally {
       setIsDeleting(false)
       setShowConfirmation(false)
@@ -42,11 +45,15 @@ const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId }) => {
     setShowConfirmation(false)
   }
 
+  const getItemName = () => {
+    return collectionType === 'feedback' ? 'feedback' : 'project'
+  }
+
   return (
     <div className="delete-button-container">
       {showConfirmation ? (
         <div className="confirmation-dialog">
-          <span className="confirmation-text">Delete this project?</span>
+          <span className="confirmation-text">Delete this {getItemName()}?</span>
           <div className="confirmation-buttons">
             <button onClick={handleDelete} disabled={isDeleting} className="confirm-delete-btn">
               {isDeleting ? 'Deleting...' : 'Yes'}
@@ -57,7 +64,7 @@ const DeletePostButton: React.FC<DeletePostButtonProps> = ({ postId }) => {
           </div>
         </div>
       ) : (
-        <button onClick={handleDelete} className="delete-btn" title="Delete project">
+        <button onClick={handleDelete} className="delete-btn" title={`Delete ${getItemName()}`}>
           <svg
             width="16"
             height="16"
