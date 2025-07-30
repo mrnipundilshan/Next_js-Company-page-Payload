@@ -49,8 +49,8 @@ export default async function HomePage() {
         <picture>
           <Image alt="Payload Logo" src="/media/logo.png" width={350} height={350} />
         </picture>
-        {!user && <h1>Welcome to Admin Panel</h1>}
-        {user && <h2>Welcome back to Admin Panel, {user.email}</h2>}
+        {!user && <h4>Welcome to Admin Panel</h4>}
+        {user && <h4>Welcome back to Admin Panel, {user.email}</h4>}
 
         <div className="links">
           <a
